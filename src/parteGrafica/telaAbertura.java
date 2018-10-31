@@ -15,7 +15,7 @@ import nasf.Rede;
  */
 
 public class telaAbertura extends javax.swing.JFrame {
-    Paciente paciente = new Paciente(null, 0);
+    //Paciente paciente = new Paciente(null, 0);
 //    Banco banco = new Banco();
     /**
      * Creates new form telaAbertura
@@ -88,7 +88,7 @@ public class telaAbertura extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
     if(Rede.banco == null)
         Rede.banco = new Banco();
-
+    Paciente paciente = new Paciente(null,0);
     paciente.setSenha(Integer.parseInt(txtSenha.getText()));
     paciente.setNome(txtUsuario.getText());
     Rede.banco.adicionarPaciente(paciente);
@@ -100,10 +100,10 @@ public class telaAbertura extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-           for (Paciente paciente : Rede.banco.tdsPacientes()) {
-            if(paciente.getNome().trim().equals(txtUsuario.getText()) && paciente.getSenha() == Integer.parseInt(txtSenha.getText())){
+           for (int i = 0; i < Rede.banco.nPacientes; i++){
+            if(Rede.banco.pacientes[i].getNome().trim().equals(txtUsuario.getText()) && Rede.banco.pacientes[i].getSenha() == Integer.parseInt(txtSenha.getText())){
                 
-                PacienteGraf novo = new PacienteGraf(paciente);
+                PacienteGraf novo = new PacienteGraf(Rede.banco.pacientes[i]);
                 novo.setVisible(true);
                 novo.setLocationRelativeTo(null);
                 

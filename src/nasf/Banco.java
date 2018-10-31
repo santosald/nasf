@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class Banco implements Serializable {
     
-    public Paciente[] pacientes = new Paciente[100];
+    public static Paciente[] pacientes = new Paciente[100];
     private static final String nomeBanco = "banco.ser";
-    int nPacientes = 0;
+    public int nPacientes = 0;
     public Banco() {
 
     }
@@ -31,6 +31,7 @@ public class Banco implements Serializable {
     public Paciente[] tdsPacientes(){
         return pacientes;
     }
+    
     public void serializar() {
       File arq = new File(nomeBanco);
 
