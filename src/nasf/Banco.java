@@ -10,10 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
-/**
- *
- * @author Jorge Gomes & Naiara Brito
- */
+
 public class Banco implements Serializable {
     
     public static Paciente[] pacientes = new Paciente[100];

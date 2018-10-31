@@ -10,7 +10,7 @@
 
 3. Terminar serialização;
 
-4. Envio do arquivo;
+4. Envio do arquivo para reabrir o programa com as informações atualizadas;
 
 5. Criar classe prontuário;
 

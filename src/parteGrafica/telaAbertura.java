@@ -9,7 +9,7 @@ import nasf.Rede;
 
 /**
  *
- * @author aluno
+ * @author Jorge Gomes
  */
 
 public class telaAbertura extends javax.swing.JFrame {
