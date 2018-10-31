@@ -107,26 +107,22 @@ public class telaAbertura extends javax.swing.JFrame {
     Paciente paciente = new Paciente(null,0);
     paciente.setSenha(Integer.parseInt(txtSenha.getText()));
     paciente.setNome(txtUsuario.getText());
+    paciente.setIdade(19);
     banco.adicionarPaciente(paciente);
-    System.out.println("");
-    
     banco.serializar();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //bancoAb = deserializar();
-        for (int i = 0; i < banco.nPacientes; i++){
-               
-               if(banco.pacientes[i].getNome().trim().equals(txtUsuario.getText()) && banco.pacientes[i].getSenha() == Integer.parseInt(txtSenha.getText())){
-                
-                PacienteGraf novo = new PacienteGraf(banco.pacientes[i]);
-                novo.setVisible(true);
-                novo.setLocationRelativeTo(null);
-                
+
+        for (Paciente x : banco.tdsPacientes() ) {
+            if(x != null){
+            if(x.getNome().equals(txtUsuario.getText())){
+               PacienteGraf novo = new PacienteGraf(x);
+//               novo.setLocation(null);
+               novo.setVisible(true);
             }
-               
         }
-        System.out.println(banco.nPacientes);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

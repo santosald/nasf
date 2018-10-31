@@ -8,26 +8,27 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 
 
 public class Banco implements Serializable {
     
-    public static Paciente[] pacientes = new Paciente[100];
+//    public static Paciente[] pacientes = new Paciente[100];
+    public List<Paciente> pacientes;
     private static final String nomeBanco = "dados.ser";
     
     public int nPacientes = 0;
     
     public Banco() {
-
+        pacientes = new ArrayList<Paciente>();
     }
 
-    public void adicionarPaciente(Paciente paciente){
-        this.pacientes[nPacientes] = paciente;
-        nPacientes++;
+    public List<Paciente> tdsPacientes(){
+        return pacientes;
     }
     
-    public Paciente[] tdsPacientes(){
-        return pacientes;
+    public void adicionarPaciente(Paciente paciente){
+        pacientes.add(paciente);
     }
     
     public void serializar() {
