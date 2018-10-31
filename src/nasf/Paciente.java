@@ -6,6 +6,7 @@
 package nasf;
 
 import java.io.Serializable;
+import java.net.Socket;
  
 /**
  *
@@ -13,8 +14,6 @@ import java.io.Serializable;
  */
 
 public class Paciente implements Serializable {
-    
-    
     String nome;
     int idade;
     int senha;
