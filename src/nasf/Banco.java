@@ -8,14 +8,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.List;
 
 
 public class Banco implements Serializable {
     
     public static Paciente[] pacientes = new Paciente[100];
-    private static final String nomeBanco = "banco.ser";
+    private static final String nomeBanco = "dados.ser";
+    
     public int nPacientes = 0;
+    
     public Banco() {
 
     }
@@ -39,7 +40,7 @@ public class Banco implements Serializable {
     
       } catch(IOException erro) {
           System.out.printf("Erro: %s", erro.getMessage());
-      }         
+      }        
       }
     
 

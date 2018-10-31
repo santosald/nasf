@@ -11,4 +11,8 @@ package nasf;
  */
 public class Prontuario {
     
+    Paciente dono;
+    public Prontuario(){
+        
+    }
 }

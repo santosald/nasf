@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import nasf.Banco;
 import nasf.Paciente;
-import nasf.Rede;
+import static nasf.Rede.banco;
 
 /**
  *
@@ -14,9 +14,9 @@ import nasf.Rede;
 
 public class telaAbertura extends javax.swing.JFrame {
     //Paciente paciente = new Paciente(null, 0);
-//    Banco banco = new Banco();
-        private static final String nomeBanco = "banco.ser";
-    public static Banco banco = deserializar();
+//    Banco bancoAb = Rede.banco;
+    private static final String nomeBanco = "dados.ser";
+//    public static Banco banco = deserializar();
     /**
      * Creates new form telaAbertura
      */
@@ -114,9 +114,9 @@ public class telaAbertura extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-          banco = deserializar(); 
+        //bancoAb = deserializar();
         for (int i = 0; i < banco.nPacientes; i++){
-               if(banco.pacientes[i] != null){
+               
                if(banco.pacientes[i].getNome().trim().equals(txtUsuario.getText()) && banco.pacientes[i].getSenha() == Integer.parseInt(txtSenha.getText())){
                 
                 PacienteGraf novo = new PacienteGraf(banco.pacientes[i]);
@@ -124,8 +124,9 @@ public class telaAbertura extends javax.swing.JFrame {
                 novo.setLocationRelativeTo(null);
                 
             }
-               }
+               
         }
+        System.out.println(banco.nPacientes);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
