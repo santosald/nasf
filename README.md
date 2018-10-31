@@ -1,6 +1,6 @@
 ###### NASF
 
-###Links
+### Links
 
 [Página oficial do NASF](http://dab.saude.gov.br/portaldab/ape_nasf.php)
 
@@ -11,7 +11,7 @@ Vai existir um classe servidor que vai suportar do servidor compartilhado do nas
 No caso, um serversocket com TCP. 
 
 
-#####TO DO
+##### TO DO
 1. Criar perfil profissional;
 
 2. Complementar Paciente;
