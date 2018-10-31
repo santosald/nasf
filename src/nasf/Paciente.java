@@ -11,7 +11,9 @@ import java.io.Serializable;
  *
  * @author aluno
  */
+
 public class Paciente implements Serializable {
+    
     
     String nome;
     int idade;
