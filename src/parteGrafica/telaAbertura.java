@@ -1,10 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package parteGrafica;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import nasf.Banco;
 import nasf.Paciente;
 import nasf.Rede;
@@ -17,6 +15,8 @@ import nasf.Rede;
 public class telaAbertura extends javax.swing.JFrame {
     //Paciente paciente = new Paciente(null, 0);
 //    Banco banco = new Banco();
+        private static final String nomeBanco = "banco.ser";
+    public static Banco banco = deserializar();
     /**
      * Creates new form telaAbertura
      */
@@ -24,6 +24,22 @@ public class telaAbertura extends javax.swing.JFrame {
         initComponents();
     }
 
+            
+            
+    private static Banco deserializar() {
+      Banco rede = null;
+      try {
+        ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(nomeBanco));
+        rede = (Banco)objInput.readObject();
+        objInput.close();        
+      } catch(IOException erro1) {
+          System.out.printf("Erro: %s", erro1.getMessage());
+      } catch(ClassNotFoundException erro2) {
+          System.out.printf("Erro: %s", erro2.getMessage());
+      }
+    
+      return rede;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,28 +102,29 @@ public class telaAbertura extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-    if(Rede.banco == null)
-        Rede.banco = new Banco();
+    if(banco == null)
+        banco = new Banco();
     Paciente paciente = new Paciente(null,0);
     paciente.setSenha(Integer.parseInt(txtSenha.getText()));
     paciente.setNome(txtUsuario.getText());
-    Rede.banco.adicionarPaciente(paciente);
+    banco.adicionarPaciente(paciente);
     System.out.println("");
     
-    Rede.banco.serializar();
-//    PacienteGraf novo = new PacienteGraf(paciente);
-//    novo.setVisible(true);
+    banco.serializar();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-           for (int i = 0; i < Rede.banco.nPacientes; i++){
-            if(Rede.banco.pacientes[i].getNome().trim().equals(txtUsuario.getText()) && Rede.banco.pacientes[i].getSenha() == Integer.parseInt(txtSenha.getText())){
+          banco = deserializar(); 
+        for (int i = 0; i < banco.nPacientes; i++){
+               if(banco.pacientes[i] != null){
+               if(banco.pacientes[i].getNome().trim().equals(txtUsuario.getText()) && banco.pacientes[i].getSenha() == Integer.parseInt(txtSenha.getText())){
                 
-                PacienteGraf novo = new PacienteGraf(Rede.banco.pacientes[i]);
+                PacienteGraf novo = new PacienteGraf(banco.pacientes[i]);
                 novo.setVisible(true);
                 novo.setLocationRelativeTo(null);
                 
             }
+               }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

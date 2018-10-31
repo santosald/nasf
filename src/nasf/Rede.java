@@ -14,22 +14,22 @@ import java.io.ObjectInputStream;
  * @author aluno
  */
 public class Rede {
-    public static Banco banco = deserializar();
-    private static final String nomeBanco = "banco.ser";
-            
-            
-    private static Banco deserializar() {
-      Banco rede = null;
-      try {
-        ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(nomeBanco));
-        rede = (Banco)objInput.readObject();
-        objInput.close();        
-      } catch(IOException erro1) {
-          System.out.printf("Erro: %s", erro1.getMessage());
-      } catch(ClassNotFoundException erro2) {
-          System.out.printf("Erro: %s", erro2.getMessage());
-      }
-    
-      return rede;
-    }
+//    public static Banco banco = deserializar();
+//    private static final String nomeBanco = "banco.ser";
+//            
+//            
+//    private static Banco deserializar() {
+//      Banco rede = null;
+//      try {
+//        ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(nomeBanco));
+//        rede = (Banco)objInput.readObject();
+//        objInput.close();        
+//      } catch(IOException erro1) {
+//          System.out.printf("Erro: %s", erro1.getMessage());
+//      } catch(ClassNotFoundException erro2) {
+//          System.out.printf("Erro: %s", erro2.getMessage());
+//      }
+//    
+//      return rede;
+//    }
 }
