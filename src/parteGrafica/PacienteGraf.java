@@ -5,22 +5,26 @@
  */
 package parteGrafica;
 
+import java.net.Socket;
 import nasf.Paciente;
 
 /**
  *
  * @author aluno
  */
-public class PacienteGraf extends javax.swing.JFrame {
+public class PacienteGraf extends javax.swing.JFrame implements Runnable{
 
     /**
      * Creates new form Paciente
      */
+    
     Paciente paciente;
+//    Socket s;
     public PacienteGraf(Paciente paciente) {
         initComponents();
         this.paciente = paciente;
         atualizarTela();
+//        this.s = s;
     }
     
     
@@ -32,6 +36,7 @@ public class PacienteGraf extends javax.swing.JFrame {
     public void NomePaciente(String string){
         txtNomePaciente.setText(string);
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,4 +97,9 @@ public class PacienteGraf extends javax.swing.JFrame {
     private javax.swing.JLabel txtIdadePaciente;
     private javax.swing.JLabel txtNomePaciente;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        
+    }
 }

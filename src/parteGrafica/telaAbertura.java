@@ -3,11 +3,13 @@ package parteGrafica;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import nasf.Banco;
 import nasf.Paciente;
 import static nasf.Rede.banco;
-import sockets.ServidorNasf;
-import sockets.Usuario;
+import sockets.ServidorNasfMain;
 
 /**
  *
@@ -15,6 +17,8 @@ import sockets.Usuario;
  */
 
 public class telaAbertura extends javax.swing.JFrame {
+    
+    Socket s;
     //Paciente paciente = new Paciente(null, 0);
 //    Banco bancoAb = Rede.banco;
     private static final String nomeBanco = "dados.ser";
@@ -135,17 +139,22 @@ public class telaAbertura extends javax.swing.JFrame {
         for (Paciente x : banco.tdsPacientes() ) {
             if(x != null){
             if(x.getNome().equals(txtUsuario.getText())){
-               PacienteGraf novo = new PacienteGraf(x);
+//               PacienteGraf novo = new PacienteGraf(x);
 //               novo.setLocation(null);
-               novo.setVisible(true);
+//               novo.setVisible(true);
+                try {
+                    s = new Socket("localhost",4444);
+                } catch (IOException ex) {
+                    Logger.getLogger(telaAbertura.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    ServidorNasf nasf = new ServidorNasf();
-    nasf.run();
+    ServidorNasfMain nasf = new ServidorNasfMain();
+//    nasf.run();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

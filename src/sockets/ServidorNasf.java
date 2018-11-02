@@ -5,55 +5,28 @@
  */
 package sockets;
 
-import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import nasf.Paciente;
+import nasf.Rede;
 import parteGrafica.PacienteGraf;
 
 /**
  *
  * @author jorge
- * aqui eu já to criando o pool de threads, oq precisa modificar é a classe
- * que vou passar como parâmetro no execute pra inserir no pool.
- * 
- * nessa classe que vai ser passada como parâmetro, 
  */
-public class ServidorNasf implements Runnable {
+public class ServidorNasf implements Runnable{
     
-
-ServerSocket s; 
+    Socket s;
+    
+    public ServidorNasf(Socket s){
+    this.s = s;
+    }
+    
     @Override
     public void run() {
-     //cria um pool de threads, nesse caso um com cache onde
-    //possui um numero variavel de threads
-     Executor exec = Executors.newCachedThreadPool();
-     
-     //aloca a porta 4444 para o servidor 
-     
-        try {
-            s = new ServerSocket(4444);
-        } catch (IOException ex) {
-            Logger.getLogger(ServidorNasf.class.getName()).log(Level.SEVERE, null, ex);
-        }
-     
-    while(true){            
-         try {
-             //cria um socket passivo para ficar escutando se algum cliente
-             //tenta se conectar no servidor
-             Socket ns = s.accept();
-         } catch (IOException ex) {
-             Logger.getLogger(ServidorNasf.class.getName()).log(Level.SEVERE, null, ex);
-         }
-        //cria um novo servidor para o cliente conectado
-        //e coloco no pool de threads
-        Paciente paciente = new Paciente("higor", 10);
-        exec.execute(new Usuario(new PacienteGraf(paciente)));
-}
+        Paciente teste = new Paciente("teste",19);
+        PacienteGraf paciente = new PacienteGraf(teste);
+        paciente.setVisible(true);
     }
-     
+    
 }
