@@ -18,6 +18,10 @@ import parteGrafica.PacienteGraf;
 /**
  *
  * @author jorge
+ * aqui eu já to criando o pool de threads, oq precisa modificar é a classe
+ * que vou passar como parâmetro no execute pra inserir no pool.
+ * 
+ * nessa classe que vai ser passada como parâmetro, 
  */
 public class ServidorNasf implements Runnable {
     
@@ -25,7 +29,7 @@ public class ServidorNasf implements Runnable {
 ServerSocket s; 
     @Override
     public void run() {
-           //cria um pool de threads, nesse caso um com cache onde
+     //cria um pool de threads, nesse caso um com cache onde
     //possui um numero variavel de threads
      Executor exec = Executors.newCachedThreadPool();
      
