@@ -8,7 +8,7 @@
 
 ### Vai ser necessário para a aplicação
 
->O servidor que vai armazenar td a lista de profissionais e pacientes, prontuário, cronogramas e a programção mensal e
+>O servidor que vai armazenar td a lista de profissionais e pacientes, prontuário, cronogramas e a programação mensal e
 vai retornar pelo buffer essas informações quando requisitadas e se quem requisitou pode ter acesso
 
 >Um JFrame para caso um médico entre pelo login, lá vai ter acesso ao prontuário dos seus pacientes, o cronograma e programação
