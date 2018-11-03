@@ -1,5 +1,6 @@
 package parteGrafica;
 
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,6 +8,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import nasf.Banco;
+import nasf.Medico;
 import nasf.Paciente;
 import static nasf.Rede.banco;
 import sockets.ServidorNasfMain;
@@ -27,7 +29,7 @@ public class telaAbertura extends javax.swing.JFrame {
      * Creates new form telaAbertura
      */
     public telaAbertura() {
-        initComponents();;
+        initComponents();
     }
 
             
@@ -59,6 +61,7 @@ public class telaAbertura extends javax.swing.JFrame {
         txtSenha = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        btnProf = new javax.swing.JRadioButton();
 
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -74,34 +77,42 @@ public class telaAbertura extends javax.swing.JFrame {
             }
         });
 
+        btnProf.setText("Medico");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(137, 137, 137)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtUsuario)
-                        .addComponent(txtSenha)))
-                .addContainerGap(448, Short.MAX_VALUE))
+                        .addGap(137, 137, 137)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                            .addComponent(txtSenha))
+                        .addGap(65, 65, 65)
+                        .addComponent(btnProf))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(324, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addGap(77, 77, 77)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProf))
+                .addGap(33, 33, 33)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(59, 59, 59)
                 .addComponent(btnCadastrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
 
         pack();
@@ -110,12 +121,16 @@ public class telaAbertura extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
     if(banco == null)
         banco = new Banco();
-    Paciente paciente = new Paciente(null,0);
-    paciente.setSenha(Integer.parseInt(txtSenha.getText()));
-    paciente.setNome(txtUsuario.getText());
-    paciente.setIdade(19);
-    banco.adicionarPaciente(paciente);
-    banco.serializar();
+    
+//    if(txtProfissao.equals("paciente")){
+        Paciente paciente = new Paciente(null,0);
+        paciente.setSenha(Integer.parseInt(txtSenha.getText()));
+        paciente.setNome(txtUsuario.getText());
+        paciente.setIdade(19);
+        banco.adicionarPaciente(paciente);
+        banco.serializar();
+
+
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -124,7 +139,18 @@ public class telaAbertura extends javax.swing.JFrame {
             if(x != null){
             if(x.getNome().equals(txtUsuario.getText()) && Integer.parseInt(txtSenha.getText()) == x.getSenha()){
                 try {
+                    
                     s = new Socket("localhost",4444);
+                    DataOutputStream out = new DataOutputStream(s.getOutputStream());
+                    
+                    if(btnProf.getModel().isSelected()){
+                        out.writeUTF("medico");
+                    
+                    }else{
+                        out.writeUTF("paciente");
+                    }
+                    
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(telaAbertura.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -170,6 +196,7 @@ public class telaAbertura extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JRadioButton btnProf;
     private javax.swing.JButton jButton2;
     private javax.swing.JTextField txtSenha;
     private javax.swing.JTextField txtUsuario;

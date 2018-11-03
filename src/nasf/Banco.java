@@ -15,6 +15,7 @@ public class Banco implements Serializable {
     
 //    public static Paciente[] pacientes = new Paciente[100];
     public List<Paciente> pacientes;
+    public List<Medico> medicos;
     private static final String nomeBanco = "dados.ser";
     
     public int nPacientes = 0;
@@ -27,6 +28,13 @@ public class Banco implements Serializable {
         return pacientes;
     }
     
+    public List<Medico> tdsMedicos(){
+        return medicos;
+    }
+    
+    public void adicionarMedico(Medico medico){
+        medicos.add(medico);
+    }
     public void adicionarPaciente(Paciente paciente){
         pacientes.add(paciente);
     }
