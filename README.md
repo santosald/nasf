@@ -12,4 +12,4 @@
 
 >Organizar a telaAbertura e colocar os devidos tratamentos de erros (se tentar cadastrar com campo vazio etc)
 
->Terminar a construção do "feed" de prontuários na tela médico
+>Terminar a construção do "feed" de prontuários na tela médico (JPanels adicionadas em sequência em outro Jpanel)
