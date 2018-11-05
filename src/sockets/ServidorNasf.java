@@ -36,7 +36,7 @@ public class ServidorNasf implements Runnable{
         paciente.setVisible(true);
         }else{
         Medico medico = new Medico("Médico",19);
-        MedGraf med = new MedGraf(medico);
+        MedGraf med = new MedGraf(medico,s);
         med.setVisible(true);
         }
 
