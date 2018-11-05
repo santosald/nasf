@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sockets;
 
+import geral.Medico;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import nasf.Paciente;
-import nasf.Rede;
+import geral.Paciente;
+import geral.Rede;
+import parteGrafica.MedGraf;
 import parteGrafica.PacienteGraf;
 
 /**
@@ -30,17 +27,17 @@ public class ServidorNasf implements Runnable{
     public void run() {
         try {
             DataInputStream in = new DataInputStream(s.getInputStream());
-//            DataOutputStream out = new DataOutputStream(s.getOutputStream());
+            DataOutputStream out = new DataOutputStream(s.getOutputStream());
             
             
-        if(in.readUTF().equals("paciente")){
-        Paciente teste = new Paciente("paciente",19);
-        PacienteGraf paciente = new PacienteGraf(teste);
+        if(in.readUTF().equals("Paciente")){
+        Paciente teste = new Paciente("Paciente",19);
+        PacienteGraf paciente = new PacienteGraf(teste,s);
         paciente.setVisible(true);
         }else{
-        Paciente teste = new Paciente("medico",19);
-        PacienteGraf paciente = new PacienteGraf(teste);
-        paciente.setVisible(true);
+        Medico medico = new Medico("Médico",19);
+        MedGraf med = new MedGraf(medico);
+        med.setVisible(true);
         }
 
         } catch (IOException e) {

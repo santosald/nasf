@@ -1,4 +1,4 @@
-package nasf;
+package geral;
 
 import java.io.Serializable;
 import java.io.File;
@@ -22,6 +22,7 @@ public class Banco implements Serializable {
     
     public Banco() {
         pacientes = new ArrayList<Paciente>();
+        medicos = new ArrayList<Medico>();
     }
 
     public List<Paciente> tdsPacientes(){
@@ -37,6 +38,7 @@ public class Banco implements Serializable {
     }
     public void adicionarPaciente(Paciente paciente){
         pacientes.add(paciente);
+        nPacientes++;
     }
     
     public void serializar() {
@@ -52,20 +54,20 @@ public class Banco implements Serializable {
       }        
       }
     
-
-    public Banco deserializar() {
-        Banco rede = null;
-        try {
-            ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(nomeBanco));
-            rede = (Banco)objInput.readObject();
-            objInput.close();        
-        } catch(IOException erro1) {
-            System.out.printf("Erro: %s", erro1.getMessage());
-        } catch(ClassNotFoundException erro2) {
-            System.out.printf("Erro: %s", erro2.getMessage());
-        }
-    
-      return rede;
-    }
+//
+//    public Banco deserializar() {
+//        Banco rede = null;
+//        try {
+//            ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(nomeBanco));
+//            rede = (Banco)objInput.readObject();
+//            objInput.close();        
+//        } catch(IOException erro1) {
+//            System.out.printf("Erro: %s", erro1.getMessage());
+//        } catch(ClassNotFoundException erro2) {
+//            System.out.printf("Erro: %s", erro2.getMessage());
+//        }
+//    
+//      return rede;
+//    }
    
 }

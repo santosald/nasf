@@ -8,7 +8,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import nasf.Paciente;
+import geral.Paciente;
 //import static sockets.ServidorNasf.s;
 //import parteGrafica.PacienteGraf;
 
@@ -23,7 +23,7 @@ public class ServidorNasfMain  {
         
         while (true) {            
             Socket ns = s.accept();
-//            DataOutputStream out = new DataOutputStream(ns.getOutputStream());
+            DataOutputStream out = new DataOutputStream(ns.getOutputStream());
 //            DataOutputStream out = new DataOutputStream(ns.getOutputStream());
 //            exec.execute(new ServidorNasf(ns));
             new Thread(new ServidorNasf(ns)).start();

@@ -3,29 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nasf;
-
-import java.io.Serializable;
+package geral;
 
 /**
  *
  * @author jorge
  */
-public class Medico implements Serializable {
-    String nome;
-    int id;
+public class Prontuario {
     
-    public Medico(String nome, int id){
-        this.nome = nome;
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    String situacao;
+    int id;
+    public Prontuario(String situacao, int id){
+        this.situacao = situacao;
     }
 
     public int getId() {
@@ -35,5 +24,15 @@ public class Medico implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+    
     
 }

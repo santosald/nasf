@@ -1,7 +1,9 @@
 package parteGrafica;
 
 import java.net.Socket;
-import nasf.Paciente;
+import geral.Paciente;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
 /**
  *
@@ -14,13 +16,21 @@ public class PacienteGraf extends javax.swing.JFrame implements Runnable{
      */
     
     Paciente paciente;
+    Socket s;
 //    Socket s;
-    public PacienteGraf(Paciente paciente) {
+    public PacienteGraf(Paciente paciente, Socket s) {
         initComponents();
         this.paciente = paciente;
         atualizarTela();
-//        this.s = s;
+        this.s = s;
+        
+        try {
+            DataInputStream in = new DataInputStream(s.getInputStream());
+            DataOutputStream out = new DataOutputStream(s.getOutputStream());
+        } catch (Exception e) {
+        }
     }
+    
     
     
     public void atualizarTela(){
