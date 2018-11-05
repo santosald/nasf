@@ -5,11 +5,13 @@
  */
 package geral;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jorge
  */
-public class Prontuario {
+public class Prontuario implements Serializable {
     
     String situacao;
     int id;

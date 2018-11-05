@@ -49,7 +49,7 @@ public class ConverterObjetos {
         return object;
     }
 }
-//                Como converter objeto p byte
+//                Como converter de bytes p objeto
 //                int tam = in.readInt();
 //                byte[] bytes = new byte[tam];
 //                in.read(bytes);
@@ -57,7 +57,7 @@ public class ConverterObjetos {
 
 
 //
-//                                Como converter byte p objeto
+//                                Como converter objeto p bytes
 //                                byte[] bytes = Protocolo.converterObjetoParaArrayByte(professor);
 //                                out.writeBoolean(true);
 //                                out.writeInt(bytes.length);

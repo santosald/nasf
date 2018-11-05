@@ -5,10 +5,16 @@
  */
 package parteGrafica;
 
+import geral.ConverterObjetos;
 import geral.Medico;
 import geral.Paciente;
 import geral.Prontuario;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,12 +27,17 @@ public class MedGraf extends javax.swing.JFrame {
      */
     Medico medico;
     Socket s;
-    public MedGraf(Medico medico, Socket s) {
+    Paciente teste;
+    DataInputStream in;
+    DataOutputStream out;
+//    ConverterObjetos converter = new ConverterObjetos();
+    public MedGraf(Medico medico, DataInputStream in, DataOutputStream out) {
         initComponents();
         this.medico = medico;
         Prontuario prontuario = new Prontuario("ruim", 123);
-        Paciente teste = new Paciente("teste", 19);
+        teste = new Paciente("teste", 19);
         teste.setProntuario(prontuario);
+        teste.setNome("Jorge");
         ProntuarioPanel graf = new ProntuarioPanel(teste);
         Prontuario prontuario2 = new Prontuario("ruim", 123);
         Paciente teste2 = new Paciente("teste", 19);
@@ -36,6 +47,8 @@ public class MedGraf extends javax.swing.JFrame {
         pnlProntuario.add(graf2);
         pnlProntuario.repaint();
         pnlProntuario.revalidate();
+        this.in = in;
+        this.out = out;
         this.s = s;
     }
     
@@ -62,6 +75,7 @@ public class MedGraf extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlProntuario = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -93,6 +107,13 @@ public class MedGraf extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,13 +122,18 @@ public class MedGraf extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton1))
-                    .addComponent(jButton2))
-                .addGap(57, 57, 57))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(jButton1))
+                            .addComponent(jButton2))
+                        .addGap(57, 57, 57))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(74, 74, 74))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,7 +144,9 @@ public class MedGraf extends javax.swing.JFrame {
                     .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addComponent(jButton2)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addContainerGap(239, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1)
@@ -138,12 +166,33 @@ public class MedGraf extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+//        System.out.println(teste.getNome());
+        try {
+//            in = new DataInputStream(s.getInputStream());
+//            out  = new DataOutputStream(s.getOutputStream());
+            byte[] bytes = ConverterObjetos.converterObjetoParaByte(teste);
+//            out.write(0);
+            out.writeInt(bytes.length);
+            System.out.println(bytes.length+"");
+            out.write(bytes, 0, bytes.length);
+        } catch (IOException ex) {
+            Logger.getLogger(MedGraf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Paciente paciente = geral.Rede.banco.buscarPaciente("Jorge");
+        PacienteGraf pacientegraf = new PacienteGraf(paciente, s);
+        pacientegraf.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlProntuario;
