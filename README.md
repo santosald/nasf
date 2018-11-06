@@ -8,13 +8,45 @@
 
 ### O que falta na GUI
 
->Complementar os ícones do menu na telaAbertura (ajuda, contato, etc que vão conter informações do nasf)
+#### TODOS
 
->Organizar a telaAbertura e colocar os devidos tratamentos de erros (se tentar cadastrar com campo vazio etc)
+>SET.LOCATION(NULL);
 
->Terminar a construção do "feed" de prontuários na tela médico (JPanels adicionadas em sequência em outro Jpanel)
+>MUDAR CONFIG DO FECHAR DAS TELAS
 
->Atualizar a tela paciente
+>Colocar JOptionPane c informação em cada botão
+
+>Complementar menu info do login
+
+>
 
 
-x_x
+#### MÉDICO
+
+>Implementar botão encaminha prontuário
+
+>Implementar botão edita prontuário
+
+>Receber solicitação de encaminhamento
+
+>Jframe que abre o prontuário do paciente
+
+
+#### PACIENTE
+
+>botao combinação dos medicos q ao clicar abre um simples perfil do médico
+
+>informações dele
+
+
+
+### O que falta servidor 
+
+>enviar medico pro servidor com a atualização do paciente vinculado
+
+>enviar pro banco o paciente cadastrado
+
+>enviar prontuario de um medico pro outro
+
+
+##### Se der tempo, marca consulta!

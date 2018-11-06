@@ -142,14 +142,17 @@ public class telaAbertura extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCadastrar)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(59, 59, 59)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCadastrar)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                            .addComponent(txtUsuario))
                         .addGap(45, 45, 45)
                         .addComponent(boxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(105, Short.MAX_VALUE))
@@ -165,9 +168,9 @@ public class telaAbertura extends javax.swing.JFrame {
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastrar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         pack();
@@ -182,7 +185,8 @@ public class telaAbertura extends javax.swing.JFrame {
     String teste = (String)boxUsuario.getSelectedItem();
     
 //se a String selecionada for um Paciente, ele cria um objeto dele e pega a senha e usuario e adiciona no banco 
-       if(teste.equals("Paciente")){
+    if(!txtUsuario.getText().equals("") && !txtSenha.getText().equals("")){
+        if(teste.equals("Paciente")){
            
             Paciente paciente = new Paciente(txtUsuario.getText(),Integer.parseInt(txtSenha.getText()));
 //            paciente.setId(10);
@@ -211,59 +215,68 @@ public class telaAbertura extends javax.swing.JFrame {
         }
            
        }
+    }else if(txtUsuario.getText().equals("") || txtSenha.getText().equals("")){
+        JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+    }
+       
+       
        
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-  String teste = (String)boxUsuario.getSelectedItem();
+        String teste = (String)boxUsuario.getSelectedItem();
+        if(!txtUsuario.getText().equals("") && !txtSenha.getText().equals("")){
+            if(teste.equals("Médico")){       
+                   try {
+                      out.writeInt(102);
+                      out.writeUTF(txtUsuario.getText());
+                      out.writeUTF(txtSenha.getText());
 
-if(teste.equals("Médico")){       
-         try {
-            out.writeInt(102);
-            out.writeUTF(txtUsuario.getText());
-            out.writeUTF(txtSenha.getText());
-       
-            if(in.readBoolean()){
-                int tam = in.readInt();
-                byte[] bytes = new byte[tam];
-                in.read(bytes);
-                medico = (Medico) Protocolo.converterByteArrayParaObjeto(bytes);
-             
-                MedGraf med = new MedGraf(medico, in,out);
-                med.setVisible(true);   
-            } else {
-                JOptionPane.showMessageDialog(this, "Senha/Usuario incorreta", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-            
-        }catch (Exception e){
-             System.out.println(e.getMessage());
-             JOptionPane.showMessageDialog(this, "Falha no servidor.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-}else{
-         try {
-            out.writeInt(101);
-            out.writeUTF(txtUsuario.getText());
-            out.writeUTF(txtSenha.getText());
-       
-            if(in.readBoolean()){
-                int tam = in.readInt();
-                byte[] bytes = new byte[tam];
-                in.read(bytes);
-                paciente = (Paciente) Protocolo.converterByteArrayParaObjeto(bytes);
-             
-                PacienteGraf pac = new PacienteGraf(paciente, in, out);
-                pac.setVisible(true);   
-            } else {
-                JOptionPane.showMessageDialog(this, "Senha/Usuario incorreta", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-            
-        }catch (Exception e){
-             System.out.println(e.getMessage());
-             JOptionPane.showMessageDialog(this, "Falha no servidor.", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+                      if(in.readBoolean()){
+                          int tam = in.readInt();
+                          byte[] bytes = new byte[tam];
+                          in.read(bytes);
+                          medico = (Medico) Protocolo.converterByteArrayParaObjeto(bytes);
 
-}       
+                          MedGraf med = new MedGraf(medico, in,out);
+                          med.setVisible(true);   
+                      } else {
+                          JOptionPane.showMessageDialog(this, "Senha/Usuario incorreta", "Erro", JOptionPane.ERROR_MESSAGE);
+                      }
+
+                  }catch (Exception e){
+                       System.out.println(e.getMessage());
+                       JOptionPane.showMessageDialog(this, "Falha no servidor.", "Erro", JOptionPane.ERROR_MESSAGE);
+                  }
+          }else{
+                   try {
+                      out.writeInt(101);
+                      out.writeUTF(txtUsuario.getText());
+                      out.writeUTF(txtSenha.getText());
+
+                      if(in.readBoolean()){
+                          int tam = in.readInt();
+                          byte[] bytes = new byte[tam];
+                          in.read(bytes);
+                          paciente = (Paciente) Protocolo.converterByteArrayParaObjeto(bytes);
+
+                          PacienteGraf pac = new PacienteGraf(paciente, in, out);
+                          pac.setVisible(true);   
+                      } else {
+                          JOptionPane.showMessageDialog(this, "Senha/Usuario incorreta", "Erro", JOptionPane.ERROR_MESSAGE);
+                      }
+
+                  }catch (Exception e){
+                       System.out.println(e.getMessage());
+                       JOptionPane.showMessageDialog(this, "Falha no servidor.", "Erro", JOptionPane.ERROR_MESSAGE);
+                  }
+
+          } 
+        }else if(txtUsuario.getText().equals("") || txtSenha.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+    }
+                
             
     }//GEN-LAST:event_jButton2ActionPerformed
 

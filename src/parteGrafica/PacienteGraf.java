@@ -33,12 +33,13 @@ public class PacienteGraf extends javax.swing.JFrame{
     
     
     public void atualizarTela(){
-        txtNomePaciente.setText(this.paciente.getNome());
-        txtIdadePaciente.setText(this.paciente.getIdade() + "");
+        lblNomePaciente.setText(this.paciente.getNome());
+        lblIdadePaciente.setText(this.paciente.getSexo() + "");
+        lblID.setText(paciente.getId() + "");
     }
     
     public void NomePaciente(String string){
-        txtNomePaciente.setText(string);
+        lblNomePaciente.setText(string);
     }
 
     @SuppressWarnings("unchecked")
@@ -46,19 +47,19 @@ public class PacienteGraf extends javax.swing.JFrame{
     private void initComponents() {
 
         jToggleButton1 = new javax.swing.JToggleButton();
-        txtNomePaciente = new javax.swing.JLabel();
-        txtIdadePaciente = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblNomePaciente = new javax.swing.JLabel();
+        lblIdadePaciente = new javax.swing.JLabel();
+        lblID = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txtNomePaciente.setText("jLabel1");
+        lblNomePaciente.setText("jLabel1");
 
-        txtIdadePaciente.setText("jLabel2");
+        lblIdadePaciente.setText("jLabel2");
 
-        jLabel1.setText("jLabel1");
+        lblID.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,34 +68,31 @@ public class PacienteGraf extends javax.swing.JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addGap(164, 164, 164)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtIdadePaciente)
-                    .addComponent(txtNomePaciente))
+                    .addComponent(lblID)
+                    .addComponent(lblIdadePaciente)
+                    .addComponent(lblNomePaciente))
                 .addContainerGap(202, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(171, 171, 171))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(txtNomePaciente)
+                .addComponent(lblNomePaciente)
                 .addGap(18, 18, 18)
-                .addComponent(txtIdadePaciente)
-                .addGap(75, 75, 75)
-                .addComponent(jLabel1)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addComponent(lblIdadePaciente)
+                .addGap(18, 18, 18)
+                .addComponent(lblID)
+                .addContainerGap(197, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JLabel txtIdadePaciente;
-    private javax.swing.JLabel txtNomePaciente;
+    private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblIdadePaciente;
+    private javax.swing.JLabel lblNomePaciente;
     // End of variables declaration//GEN-END:variables
 
 }
