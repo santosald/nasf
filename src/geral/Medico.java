@@ -68,5 +68,13 @@ public class Medico implements Serializable {
         this.pacientes = pacientes;
     }
     
+    public Paciente buscarPacienteString(String string){
+        for (Paciente x : pacientes) {
+            if(x.getUsuario().equals(string)){
+                return x;
+            }
+        }
+        return null;
+    }
     
 }

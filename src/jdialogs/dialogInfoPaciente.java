@@ -165,7 +165,7 @@ public class dialogInfoPaciente extends javax.swing.JDialog {
         paciente.setNome(txtNome.getText());
         paciente.setSexo(txtSexo.getText());
         paciente.setId(Integer.parseInt(txtID.getText()));
-                byte[] bytes = Protocolo.converterObjetoParaArrayByte(paciente);
+        byte[] bytes = Protocolo.converterObjetoParaArrayByte(paciente);
         try {
 //            out.writeBoolean(true);
             out.writeInt(105);

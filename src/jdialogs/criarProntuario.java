@@ -24,11 +24,17 @@ public class criarProntuario extends javax.swing.JDialog {
     Paciente paciente;
     DataInputStream in;
     DataOutputStream out;
-    public criarProntuario(Paciente paciente, DataInputStream in, DataOutputStream out) {
+    Medico medico;
+    public criarProntuario(Medico medico,Paciente paciente, DataInputStream in, DataOutputStream out) {
         initComponents();
         this.paciente = paciente;
         this.in = in;
         this.out = out;
+        this.medico = medico;
+        comboPassientes.removeAllItems();
+        for (Paciente x : medico.getPacientes()) {
+            comboPassientes.addItem(x.getUsuario());
+        }
     }
 
     /**
@@ -41,20 +47,15 @@ public class criarProntuario extends javax.swing.JDialog {
     private void initComponents() {
 
         txtSituacao = new javax.swing.JTextField();
-        txtID = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        comboPassientes = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         txtSituacao.setText("jTextField1");
 
-        txtID.setText("jTextField2");
-
         jLabel1.setText("Situação");
-
-        jLabel2.setText("ID");
 
         jButton1.setText("Criar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -63,54 +64,47 @@ public class criarProntuario extends javax.swing.JDialog {
             }
         });
 
+        comboPassientes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                .addComponent(jLabel1)
+                .addGap(33, 33, 33)
+                .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(52, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(43, 43, 43))
+                    .addComponent(jButton1)
+                    .addComponent(comboPassientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(76, 76, 76)
+                .addContainerGap(61, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
                     .addComponent(txtSituacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                    .addComponent(comboPassientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(90, 90, 90)
                 .addComponent(jButton1)
-                .addGap(85, 85, 85))
+                .addGap(32, 32, 32))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    Prontuario prontuario = new Prontuario(txtSituacao.getText(), Integer.parseInt(txtID.getText()));
-    paciente.setProntuario(prontuario);
+    String teste = (String)comboPassientes.getSelectedItem();
+    Paciente aux = medico.buscarPacienteString(teste);
+    Prontuario prontuario = new Prontuario(txtSituacao.getText());
+    aux.setProntuario(prontuario);
+
         try {
             out.writeInt(103);
-            byte[] bytes = Protocolo.converterObjetoParaArrayByte(paciente);
+            byte[] bytes = Protocolo.converterObjetoParaArrayByte(aux);
             out.writeInt(bytes.length);
             out.write(bytes, 0, bytes.length);
         } catch (Exception e) {
@@ -118,10 +112,9 @@ public class criarProntuario extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboPassientes;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtSituacao;
     // End of variables declaration//GEN-END:variables
 }

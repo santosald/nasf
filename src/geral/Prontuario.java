@@ -15,7 +15,7 @@ public class Prontuario implements Serializable {
     
     String situacao;
     int id;
-    public Prontuario(String situacao, int id){
+    public Prontuario(String situacao){
         this.situacao = situacao;
     }
 
