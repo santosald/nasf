@@ -84,6 +84,19 @@ public class ServidorNasf implements Runnable {
                                 out.write(bytes, 0, bytes.length);
                             }
                             break;
+                        //armazenar prontuario criado    
+                        case 3:
+                            
+                            int tam = in.readInt();
+                            byte[] bytes = new byte[tam];
+                            in.read(bytes);
+                            paciente = (Paciente) Protocolo.converterByteArrayParaObjeto(bytes);
+                            
+                            Paciente auxiliar = Rede.banco.buscarPaciente(paciente.getNome());
+                            Rede.banco.removerPaciente(auxiliar);
+                            Rede.banco.adicionarPaciente(paciente);
+                            System.out.println(paciente.getProntuario().getSituacao());
+                            break;
                     }
                 }
             } catch (Exception ex) {

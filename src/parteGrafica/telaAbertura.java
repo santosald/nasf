@@ -29,15 +29,9 @@ public class telaAbertura extends javax.swing.JFrame {
     DataOutputStream out;
     Medico medico;
     Paciente paciente;
-//    String[] petStrings = {"Medico", "Paciente"};
-    
-    //Paciente paciente = new Paciente(null, 0);
-//    Banco bancoAb = Rede.banco;
+
     private static final String nomeBanco = "dados.ser";
-//    public static Banco banco = deserializar();
-    /**
-     * Creates new form telaAbertura
-     */
+
     public telaAbertura() throws IOException {
         initComponents();
         boxUsuario.removeAllItems();
@@ -49,20 +43,6 @@ public class telaAbertura extends javax.swing.JFrame {
         out = new DataOutputStream(s.getOutputStream());
     }
 
-    private static Banco deserializar() {
-      Banco rede = null;
-      try {
-        ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(nomeBanco));
-        rede = (Banco)objInput.readObject();
-        objInput.close();        
-      } catch(IOException erro1) {
-          System.out.printf("Erro: %s", erro1.getMessage());
-      } catch(ClassNotFoundException erro2) {
-          System.out.printf("Erro: %s", erro2.getMessage());
-      }
-    
-      return rede;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,7 +68,6 @@ public class telaAbertura extends javax.swing.JFrame {
         btnCadastrar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         boxUsuario = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
         menu = new javax.swing.JMenuBar();
         menuInfo = new javax.swing.JMenu();
         menuContato = new javax.swing.JMenu();
@@ -139,13 +118,6 @@ public class telaAbertura extends javax.swing.JFrame {
 
         boxUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         menuInfo.setText("Info");
         menu.add(menuInfo);
 
@@ -165,24 +137,18 @@ public class telaAbertura extends javax.swing.JFrame {
                         .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47)
                         .addComponent(boxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 175, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addContainerGap(134, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -279,18 +245,6 @@ if(teste.equals("Médico")){
             
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            ObjectInputStream leitor = new ObjectInputStream(s.getInputStream());
-             ObjectOutputStream escritor = new ObjectOutputStream(s.getOutputStream());
-        Paciente paciente = new Paciente("ricardo",19);
-        escritor.writeObject(paciente);
-        } catch (IOException ex) {
-            Logger.getLogger(MedGraf.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -341,7 +295,6 @@ if(teste.equals("Médico")){
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JFrame jFrame1;

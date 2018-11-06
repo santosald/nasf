@@ -25,7 +25,7 @@ public class Paciente implements Serializable {
         this.usuario = usuario;
         this.senha = senha;
     }
-
+    
     public String getNome() {
         return nome;
     }

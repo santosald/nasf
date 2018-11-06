@@ -41,6 +41,9 @@ public class Banco implements Serializable {
         nPacientes++;
     }
     
+    public void removerPaciente(Paciente paciente){
+        this.pacientes.remove(paciente);
+    }
     public Paciente buscarPaciente(String nome){
         for (Paciente paciente : pacientes) {
             if(paciente != null){
@@ -48,7 +51,7 @@ public class Banco implements Serializable {
                 return paciente;
             }
         }
-        return new Paciente("Jonathan",17);
+        return null;
     }
     public void serializar() {
       File arq = new File(nomeBanco);
