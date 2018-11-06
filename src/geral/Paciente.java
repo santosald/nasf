@@ -21,6 +21,7 @@ public class Paciente implements Serializable {
     int CPF = 0;
     String sexo = null;
     Prontuario prontuario = null;
+    int id;
     public Paciente(String usuario, int senha){
         this.usuario = usuario;
         this.senha = senha;
@@ -80,6 +81,14 @@ public class Paciente implements Serializable {
 
     public void setProntuario(Prontuario prontuario) {
         this.prontuario = prontuario;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     

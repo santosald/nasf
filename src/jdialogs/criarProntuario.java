@@ -109,7 +109,7 @@ public class criarProntuario extends javax.swing.JDialog {
     Prontuario prontuario = new Prontuario(txtSituacao.getText(), Integer.parseInt(txtID.getText()));
     paciente.setProntuario(prontuario);
         try {
-            out.writeInt(3);
+            out.writeInt(103);
             byte[] bytes = Protocolo.converterObjetoParaArrayByte(paciente);
             out.writeInt(bytes.length);
             out.write(bytes, 0, bytes.length);

@@ -53,6 +53,16 @@ public class Banco implements Serializable {
         }
         return null;
     }
+    
+    public Paciente buscarID(int id){
+        for (Paciente paciente : pacientes) {
+            if(paciente != null){
+                        if(paciente.id == id)
+                return paciente;
+            }
+        }
+        return null;
+    }
     public void serializar() {
       File arq = new File(nomeBanco);
 

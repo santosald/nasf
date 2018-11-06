@@ -51,7 +51,7 @@ public class ServidorNasf implements Runnable {
 
                     switch (caso) {
                         //login pro paciente
-                        case 1:
+                        case 101:
 
                             usuario = in.readUTF();
                             senha = in.readUTF();
@@ -68,7 +68,7 @@ public class ServidorNasf implements Runnable {
                             }
                             break;
                         //login pro medico    
-                        case 2:
+                        case 102:
 
                             usuario = in.readUTF();
                             senha = in.readUTF();
@@ -85,7 +85,7 @@ public class ServidorNasf implements Runnable {
                             }
                             break;
                         //armazenar prontuario criado    
-                        case 3:
+                        case 103:
                             
                             int tam = in.readInt();
                             byte[] bytes = new byte[tam];
@@ -97,6 +97,21 @@ public class ServidorNasf implements Runnable {
                             Rede.banco.adicionarPaciente(paciente);
                             System.out.println(paciente.getProntuario().getSituacao());
                             break;
+                        //buscar usuario no banco   
+                        case 104:
+
+                            int id = in.readInt();
+                            Paciente pacienteid = Rede.banco.buscarID(id);
+                            
+                            if (pacienteid == null) {
+//                                out.writeBoolean(false);
+                            } else {
+                                byte[] bytesid = Protocolo.converterObjetoParaArrayByte(pacienteid);
+                                out.writeBoolean(true);
+                                out.writeInt(bytesid.length);
+                                out.write(bytesid, 0, bytesid.length);
+                            }
+                            break;    
                     }
                 }
             } catch (Exception ex) {

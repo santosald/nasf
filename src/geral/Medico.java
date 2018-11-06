@@ -23,7 +23,10 @@ public class Medico implements Serializable {
         this.nome = nome;
         this.senha = senha;
     }
-
+    
+    public void adicionarPaciente(Paciente paciente){
+        this.pacientes.add(paciente);
+    }
     public String getNome() {
         return nome;
     }

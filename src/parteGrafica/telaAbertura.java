@@ -198,7 +198,7 @@ public class telaAbertura extends javax.swing.JFrame {
 
 if(teste.equals("Médico")){       
          try {
-            out.writeInt(2);
+            out.writeInt(102);
             out.writeUTF(txtUsuario.getText());
             out.writeUTF(txtSenha.getText());
        
@@ -220,7 +220,7 @@ if(teste.equals("Médico")){
         }
 }else{
          try {
-            out.writeInt(1);
+            out.writeInt(101);
             out.writeUTF(txtUsuario.getText());
             out.writeUTF(txtSenha.getText());
        
