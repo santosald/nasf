@@ -153,7 +153,7 @@ public class dialogInfoPaciente extends javax.swing.JDialog {
         paciente.setNome(txtNome.getText());
         paciente.setSexo(txtSexo.getText());
         paciente.setId(Integer.parseInt(txtID.getText()));
-        Rede.banco.serializar();
+//        Rede.banco.serializar();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

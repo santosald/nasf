@@ -113,7 +113,7 @@ public class ServidorNasf implements Runnable {
                             }
                             break;
                             
-                         //salvar um usuario no banco
+                         //salvar um paciente no banco
                         case 105:
                             int tam2 = in.readInt();
                             byte[] bytes2 = new byte[tam2];
@@ -122,7 +122,7 @@ public class ServidorNasf implements Runnable {
                             Rede.banco.adicionarPaciente(paciente);
                             Rede.banco.serializar();
                             break;
-                         //salvar um usuario no banco
+                         //salvar um medico no banco
                         case 106:
                             int tam3 = in.readInt();
                             byte[] bytes3 = new byte[tam3];

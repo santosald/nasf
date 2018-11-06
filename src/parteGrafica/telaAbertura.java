@@ -187,7 +187,7 @@ public class telaAbertura extends javax.swing.JFrame {
        if(teste.equals("Paciente")){
            
             Paciente paciente = new Paciente(txtUsuario.getText(),Integer.parseInt(txtSenha.getText()));
-            banco.adicionarPaciente(paciente);
+//            banco.adicionarPaciente(paciente);
             dialogInfoPaciente info = new dialogInfoPaciente(paciente);
             info.setVisible(true);
             byte[] bytes = Protocolo.converterObjetoParaArrayByte(paciente);
@@ -208,8 +208,17 @@ public class telaAbertura extends javax.swing.JFrame {
        if(teste.equals("Médico")){
            
            Medico medico = new Medico(txtUsuario.getText(), Integer.parseInt(txtSenha.getText()));
-           banco.adicionarMedico(medico);
-           banco.serializar();
+//           banco.adicionarMedico(medico);
+//           banco.serializar();
+           byte[] bytes2 = Protocolo.converterObjetoParaArrayByte(medico);
+        try {
+            out.writeInt(106);
+            out.writeInt(bytes2.length);
+            out.write(bytes2, 0, bytes2.length);
+        } catch (IOException ex) {
+            Logger.getLogger(telaAbertura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
        }
        
     }//GEN-LAST:event_btnCadastrarActionPerformed
