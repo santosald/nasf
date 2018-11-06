@@ -10,7 +10,11 @@ import java.util.logging.Logger;
 import geral.Banco;
 import geral.Medico;
 import geral.Paciente;
+import geral.Protocolo;
 import static geral.Rede.banco;
+import java.io.DataInputStream;
+import java.io.ObjectOutputStream;
+import javax.swing.JOptionPane;
 import jdialogs.dialogInfoPaciente;
 
 /**
@@ -21,7 +25,11 @@ import jdialogs.dialogInfoPaciente;
 public class telaAbertura extends javax.swing.JFrame {
     
     Socket s;
-    String[] petStrings = {"Medico", "Paciente"};
+    DataInputStream in;
+    DataOutputStream out;
+    Medico medico;
+    Paciente paciente;
+//    String[] petStrings = {"Medico", "Paciente"};
     
     //Paciente paciente = new Paciente(null, 0);
 //    Banco bancoAb = Rede.banco;
@@ -30,15 +38,17 @@ public class telaAbertura extends javax.swing.JFrame {
     /**
      * Creates new form telaAbertura
      */
-    public telaAbertura() {
+    public telaAbertura() throws IOException {
         initComponents();
         boxUsuario.removeAllItems();
         boxUsuario.addItem("Médico");
         boxUsuario.addItem("Paciente");
+        
+        s = new Socket("localhost",4444);
+        in = new DataInputStream(s.getInputStream());
+        out = new DataOutputStream(s.getOutputStream());
     }
 
-            
-            
     private static Banco deserializar() {
       Banco rede = null;
       try {
@@ -78,6 +88,7 @@ public class telaAbertura extends javax.swing.JFrame {
         btnCadastrar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         boxUsuario = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         menu = new javax.swing.JMenuBar();
         menuInfo = new javax.swing.JMenu();
         menuContato = new javax.swing.JMenu();
@@ -128,6 +139,13 @@ public class telaAbertura extends javax.swing.JFrame {
 
         boxUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         menuInfo.setText("Info");
         menu.add(menuInfo);
 
@@ -154,11 +172,17 @@ public class telaAbertura extends javax.swing.JFrame {
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(118, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,7 +210,6 @@ public class telaAbertura extends javax.swing.JFrame {
        if(teste.equals("Paciente")){
            
             Paciente paciente = new Paciente(txtUsuario.getText(),Integer.parseInt(txtSenha.getText()));
-            paciente.setSenha(Integer.parseInt(txtSenha.getText()));
             banco.adicionarPaciente(paciente);
             dialogInfoPaciente info = new dialogInfoPaciente(paciente);
             info.setVisible(true);
@@ -205,49 +228,68 @@ public class telaAbertura extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
-        String teste = (String)boxUsuario.getSelectedItem();
-//        System.out.println(teste);
-        if(teste.equals("Paciente")){
-        for (Paciente x : banco.tdsPacientes() ) {
-            if(x != null){
-            if(x.getUsuario().equals(txtUsuario.getText()) && Integer.parseInt(txtSenha.getText()) == x.getSenha()){
-                try {
-                    s = new Socket("localhost",4444);
-                    DataOutputStream out = new DataOutputStream(s.getOutputStream());
-                        out.writeUTF("Paciente");
-                } catch (IOException ex) {
-                    Logger.getLogger(telaAbertura.class.getName()).log(Level.SEVERE, null, ex);
-                }
+  String teste = (String)boxUsuario.getSelectedItem();
+
+if(teste.equals("Médico")){       
+         try {
+            out.writeInt(2);
+            out.writeUTF(txtUsuario.getText());
+            out.writeUTF(txtSenha.getText());
+       
+            if(in.readBoolean()){
+                int tam = in.readInt();
+                byte[] bytes = new byte[tam];
+                in.read(bytes);
+                medico = (Medico) Protocolo.converterByteArrayParaObjeto(bytes);
+             
+                MedGraf med = new MedGraf(medico, in,out);
+                med.setVisible(true);   
+            } else {
+                JOptionPane.showMessageDialog(this, "Senha/Usuario incorreta", "Erro", JOptionPane.ERROR_MESSAGE);
             }
-        }
-        }
-}
-//String teste2 = (String)boxUsuario.getSelectedItem();
-if(teste.equals("Médico")){
-    for(Medico x : banco.tdsMedicos()){
-        if(x != null){
-       if(x.getNome().equals(txtUsuario.getText()) && x.getSenha() == Integer.parseInt(txtSenha.getText())){
-//            try {
             
-                try {
-                    s = new Socket("localhost", 4444);
-                    DataOutputStream out = new DataOutputStream(s.getOutputStream());
-                         out.writeUTF("Médico");
-                } catch (IOException ex) {
-                    Logger.getLogger(telaAbertura.class.getName()).log(Level.SEVERE, null, ex);
-                }
-//            }
-//        } catch (NullPointerException e) {
-//        }
-//        if(x != null){
+        }catch (Exception e){
+             System.out.println(e.getMessage());
+             JOptionPane.showMessageDialog(this, "Falha no servidor.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
+}else{
+         try {
+            out.writeInt(1);
+            out.writeUTF(txtUsuario.getText());
+            out.writeUTF(txtSenha.getText());
+       
+            if(in.readBoolean()){
+                int tam = in.readInt();
+                byte[] bytes = new byte[tam];
+                in.read(bytes);
+                paciente = (Paciente) Protocolo.converterByteArrayParaObjeto(bytes);
+             
+                PacienteGraf pac = new PacienteGraf(paciente, in, out);
+                pac.setVisible(true);   
+            } else {
+                JOptionPane.showMessageDialog(this, "Senha/Usuario incorreta", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        }catch (Exception e){
+             System.out.println(e.getMessage());
+             JOptionPane.showMessageDialog(this, "Falha no servidor.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        }
-    }
 
-//}
-
+}       
+            
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            ObjectInputStream leitor = new ObjectInputStream(s.getInputStream());
+             ObjectOutputStream escritor = new ObjectOutputStream(s.getOutputStream());
+        Paciente paciente = new Paciente("ricardo",19);
+        escritor.writeObject(paciente);
+        } catch (IOException ex) {
+            Logger.getLogger(MedGraf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,7 +321,11 @@ if(teste.equals("Médico")){
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new telaAbertura().setVisible(true);
+                try {
+                    new telaAbertura().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(telaAbertura.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -295,6 +341,7 @@ if(teste.equals("Médico")){
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JFrame jFrame1;

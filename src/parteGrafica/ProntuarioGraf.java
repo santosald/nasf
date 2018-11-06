@@ -11,19 +11,21 @@ import geral.Paciente;
  *
  * @author jorge
  */
-public class ProntuarioGraf extends javax.swing.JFrame {
+public class ProntuarioGraf extends javax.swing.JFrame implements Runnable {
 
     /**
      * Creates new form Prontuario
      */
+    Paciente paciente = null;
     public ProntuarioGraf(Paciente paciente) {
         initComponents();
+    }
+
+    public void atualizaTela(){
         lblIdade.setText(paciente.getIdade() + "");
         lblNome.setText(paciente.getNome());
         lblSexo.setText(paciente.getSexo());
     }
-
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -135,4 +137,9 @@ public class ProntuarioGraf extends javax.swing.JFrame {
     private javax.swing.JTextArea txtPrescricao;
     private javax.swing.JTextField txtSituacao;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        atualizaTela();
+    }
 }

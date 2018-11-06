@@ -1,13 +1,18 @@
 package sockets;
 
-import geral.ConverterObjetos;
+
 import geral.Medico;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import geral.Paciente;
+import geral.Protocolo;
 import geral.Rede;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import parteGrafica.MedGraf;
 import parteGrafica.PacienteGraf;
 
@@ -15,62 +20,82 @@ import parteGrafica.PacienteGraf;
  *
  * @author jorge
  */
-public class ServidorNasf implements Runnable{
-    
-    Socket s;
-    int caso;
-    public ServidorNasf(Socket s){
-    this.s = s;
-//    Paciente paciente;
+import java.net.*;
+import java.io.*;
+
+public class ServidorNasf implements Runnable {
+
+    private Socket socket;
+
+    public ServidorNasf(Socket socket) {
+        this.socket = socket;
     }
 
-
-    @Override
     public void run() {
+        int caso;
+        String usuario,senha;
+        Paciente paciente;
+        Medico medico;
         try {
-            Paciente paciente3 = null;
-            DataInputStream in = new DataInputStream(s.getInputStream());
-            DataOutputStream out = new DataOutputStream(s.getOutputStream());
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             
-        if(in.readUTF().equals("Paciente")){
-        Paciente teste = new Paciente("Paciente",19);
-        PacienteGraf paciente = new PacienteGraf(teste,s);
-        paciente.setVisible(true);
-        }else{
-        Medico medico = new Medico("Médico",19);
-        MedGraf med = new MedGraf(medico,in,out);
-        med.setVisible(true);
+
+            boolean aberto = true;
+
+            try {
+                while (aberto) {
+                    
+                    caso = in.readInt();
+                   
+
+                    switch (caso) {
+                        //login pro paciente
+                        case 1:
+
+                            usuario = in.readUTF();
+                            senha = in.readUTF();
+                            
+                            paciente = Protocolo.temPaciente(usuario, senha);
+
+                            if (paciente == null) {
+                                out.writeBoolean(false);
+                            } else {
+                                byte[] bytes = Protocolo.converterObjetoParaArrayByte(paciente);
+                                out.writeBoolean(true);
+                                out.writeInt(bytes.length);
+                                out.write(bytes, 0, bytes.length);
+                            }
+                            break;
+                        //login pro medico    
+                        case 2:
+
+                            usuario = in.readUTF();
+                            senha = in.readUTF();
+                            
+                            medico = Protocolo.temMedico(usuario, senha);
+
+                            if (medico == null) {
+                                out.writeBoolean(false);
+                            } else {
+                                byte[] bytes = Protocolo.converterObjetoParaArrayByte(medico);
+                                out.writeBoolean(true);
+                                out.writeInt(bytes.length);
+                                out.write(bytes, 0, bytes.length);
+                            }
+                            break;
+                    }
+                }
+            } catch (Exception ex) {
+                System.out.println("Conexão fechada. Razão: " + ex.toString());
+            }
+
+            in.close();
+            out.close();
+            socket.close();
+
+        } catch (Exception e) {
+            System.out.println("Conexão fechada. Razão: " + e.toString());
         }
-        while(true){
-        
-//        caso = in.readInt();
-//        switch(caso){
-//            case 0: 
-                int tamanho = in.readInt();
-                System.out.println(tamanho);
-//                if(tamanho > 0){
-                byte[] bytes = new byte[tamanho];
-                in.read(bytes);
-                paciente3 = (Paciente) ConverterObjetos.converterByteParaObjeto(bytes);
-                geral.Rede.banco.adicionarPaciente(paciente3);
-                geral.Rede.banco.serializar();
-                System.out.println(paciente3.getNome());
-//                break;
-//                }
-//                PacienteGraf novo = new PacienteGraf(paciente3, s);
-//                novo.setVisible(true);
-
-//                break;
-//        }
-        }
-
-        
-        } catch (IOException e) {
-            
-        }
-
-        
-
     }
-    
 }

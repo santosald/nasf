@@ -6,6 +6,7 @@
 package jdialogs;
 
 import geral.Paciente;
+import geral.Rede;
 
 /**
  *
@@ -139,7 +140,7 @@ public class dialogInfoPaciente extends javax.swing.JDialog {
         paciente.setCPF(Integer.parseInt(txtCPF.getText()));
         paciente.setNome(txtNome.getText());
         paciente.setSexo(txtSexo.getText());
-        geral.Rede.banco.serializar();
+        Rede.banco.serializar();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

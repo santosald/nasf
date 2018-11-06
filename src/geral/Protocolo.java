@@ -5,18 +5,46 @@
  */
 package geral;
 
+import static geral.Rede.banco;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import parteGrafica.telaAbertura;
 
 /**
  *
  * @author jorge
  */
-public class ConverterObjetos {
-     public static byte[] converterObjetoParaByte(Object object) {
+public class Protocolo {
+    public Protocolo(){}
+    
+    public static Paciente temPaciente(String usuario, String senha){
+        for (Paciente x : banco.tdsPacientes() ) {
+            if(x != null){
+            if(x.getUsuario().equals(usuario) && Integer.parseInt(senha) == x.getSenha()){
+                return x;
+            }
+        }
+        }
+    return null;
+    }
+    
+    public static Medico temMedico(String usuario,String senha){
+    for(Medico x : banco.tdsMedicos()){
+        if(x != null){
+       if(x.getNome().equals(usuario) && x.getSenha() == Integer.parseInt(senha)){
+           return x;
+        }
+        }
+        }
+    return null;
+    }
+    public static byte[] converterObjetoParaArrayByte(Object object) {
         byte[] bytes = null;
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -29,13 +57,14 @@ public class ConverterObjetos {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+         
+       
         return bytes;
     }
-
-    public static Object converterByteParaObjeto(byte[] bytes) {
+    
+    public static Object converterByteArrayParaObjeto(byte[] bytes) {
         Object object = null;
-
+ 
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
@@ -45,20 +74,7 @@ public class ConverterObjetos {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
+        
         return object;
     }
 }
-//                Como converter de bytes p objeto
-//                int tam = in.readInt();
-//                byte[] bytes = new byte[tam];
-//                in.read(bytes);
-//                professor = (Professor) Serializador.converterByteArrayParaObjeto(bytes);
-
-
-//
-//                                Como converter objeto p bytes
-//                                byte[] bytes = Protocolo.converterObjetoParaArrayByte(professor);
-//                                out.writeBoolean(true);
-//                                out.writeInt(bytes.length);
-//                                out.write(bytes, 0, bytes.length);

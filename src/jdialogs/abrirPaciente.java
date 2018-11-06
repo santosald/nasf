@@ -6,21 +6,24 @@
 package jdialogs;
 
 import geral.Paciente;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import parteGrafica.ProntuarioGraf;
 
 /**
  *
  * @author jorge
  */
-public class dialogCriarProntuario extends javax.swing.JDialog {
+public class abrirPaciente extends javax.swing.JDialog {
 
     /**
      * Creates new form dialogCriarProntuario
      */
-    Paciente paciente;
-    public dialogCriarProntuario(Paciente paciente) {
+//    Paciente paciente;
+    DataInputStream in;
+    DataOutputStream out;
+    public abrirPaciente(DataInputStream in,DataOutputStream out) {
         initComponents();
-        this.paciente = paciente;
     }
 
     /**
@@ -83,7 +86,7 @@ public class dialogCriarProntuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+    
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -43,10 +43,12 @@ public class Banco implements Serializable {
     
     public Paciente buscarPaciente(String nome){
         for (Paciente paciente : pacientes) {
-            if(paciente.nome.equals(nome))
+            if(paciente != null){
+                        if(paciente.nome.equals(nome))
                 return paciente;
+            }
         }
-        return null;
+        return new Paciente("Jonathan",17);
     }
     public void serializar() {
       File arq = new File(nomeBanco);
