@@ -122,6 +122,15 @@ public class ServidorNasf implements Runnable {
                             Rede.banco.adicionarPaciente(paciente);
                             Rede.banco.serializar();
                             break;
+                         //salvar um usuario no banco
+                        case 106:
+                            int tam3 = in.readInt();
+                            byte[] bytes3 = new byte[tam3];
+                            in.read(bytes3);
+                            Medico medico2 = (Medico) Protocolo.converterByteArrayParaObjeto(bytes3);
+                            Rede.banco.adicionarMedico(medico2);
+                            Rede.banco.serializar();
+                            break;
                     }
                 }
             } catch (Exception ex) {
