@@ -37,35 +37,28 @@ public class MedGraf extends javax.swing.JFrame  {
         this.out = out;
         this.in = in;
         atualizarTela();
+        repaint();
+        revalidate();
     }
-    
-    public void atualizarTela(){
-        for (Paciente x : medico.getPacientes()) {
-            if(x != null){
-                PacientePanel painel = new PacientePanel(x);
-                pnlPaciente.add(painel);
-                pnlPaciente.repaint();
-                pnlPaciente.revalidate();
-            }
+
+public void atualizarTela(){
+    PacientePanel z = new PacientePanel(new Paciente("Zé",19));
+    pnlPaciente.add(z);
+        for(Paciente x: medico.getPacientes()){
+            PacientePanel y = new PacientePanel(x);
+            pnlPaciente.add(y);
         }
-//        for (Paciente x : medico.getPacientes()) {
-//            if(x != null){
-//                PacientePanel graf = new PacientePanel(x);
-//                pnlPaciente.add(graf);
-//            }
-//        }
- 
-    }
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        pnlPaciente = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pnlPaciente = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -79,9 +72,6 @@ public class MedGraf extends javax.swing.JFrame  {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        pnlPaciente.setLayout(new javax.swing.BoxLayout(pnlPaciente, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane1.setViewportView(pnlPaciente);
 
         jButton1.setText("Criar prontuario");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -97,18 +87,23 @@ public class MedGraf extends javax.swing.JFrame  {
             }
         });
 
+        pnlPaciente.setLayout(new javax.swing.BoxLayout(pnlPaciente, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(pnlPaciente);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2)
                 .addGap(34, 34, 34)
                 .addComponent(jButton1)
                 .addGap(36, 36, 36))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(423, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,8 +111,9 @@ public class MedGraf extends javax.swing.JFrame  {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
-                .addContainerGap(380, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(49, 49, 49)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         pack();

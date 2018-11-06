@@ -9,7 +9,7 @@ import java.io.DataOutputStream;
  *
  * @author aluno
  */
-public class PacienteGraf extends javax.swing.JFrame implements Runnable{
+public class PacienteGraf extends javax.swing.JFrame{
 
     /**
      * Creates new form Paciente
@@ -97,9 +97,4 @@ public class PacienteGraf extends javax.swing.JFrame implements Runnable{
     private javax.swing.JLabel txtNomePaciente;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void run() {
-        atualizarTela();
-        this.setVisible(true);
-    }
 }

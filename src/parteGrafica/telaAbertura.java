@@ -12,6 +12,8 @@ import geral.Medico;
 import geral.Paciente;
 import geral.Protocolo;
 import static geral.Rede.banco;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.ObjectOutputStream;
 import javax.swing.JOptionPane;
@@ -41,6 +43,15 @@ public class telaAbertura extends javax.swing.JFrame {
         s = new Socket("localhost",4444);
         in = new DataInputStream(s.getInputStream());
         out = new DataOutputStream(s.getOutputStream());
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                banco.serializar();
+                super.windowClosing(e); 
+                
+            }            
+        });
     }
 
     /**
@@ -179,7 +190,18 @@ public class telaAbertura extends javax.swing.JFrame {
             banco.adicionarPaciente(paciente);
             dialogInfoPaciente info = new dialogInfoPaciente(paciente);
             info.setVisible(true);
-            banco.serializar();
+            byte[] bytes = Protocolo.converterObjetoParaArrayByte(paciente);
+        try {
+//            out.writeBoolean(true);
+            out.writeInt(105);
+            out.writeInt(bytes.length);
+            out.write(bytes, 0, bytes.length);
+        } catch (IOException ex) {
+            Logger.getLogger(telaAbertura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+            
+//            banco.serializar();
 }
 
 //se a String selecionada for um Médico, ele cria um objeto dele e pega a senha e usuario e adiciona no banco       

@@ -35,6 +35,8 @@ public class PacientePanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         lblNome = new javax.swing.JLabel();
 
+        setMinimumSize(new java.awt.Dimension(256, 256));
+
         jButton1.setText("Abrir prontuário");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,7 +53,7 @@ public class PacientePanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -62,12 +64,13 @@ public class PacientePanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(lblNome))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     ProntuarioGraf pron = new ProntuarioGraf(paciente);
+    pron.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
