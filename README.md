@@ -12,41 +12,41 @@
 
 >SET.LOCATION(NULL);
 
->MUDAR CONFIG DO FECHAR DAS TELAS
+>MUDAR CONFIG DO FECHAR DAS TELAS;
 
->Colocar JOptionPane c informação em cada botão
+>Colocar JOptionPane c informação em cada botão;
 
->Complementar menu info do login
+>Complementar menu info do login;
 
->Informações da info
+>Informações da info;
 
 
 #### MÉDICO
 
->Implementar botão encaminha prontuário
+>Implementar botão encaminha prontuário;
 
->Implementar botão edita prontuário
+>Implementar botão edita prontuário;
 
->Receber solicitação de encaminhamento
+>Receber solicitação de encaminhamento;
 
->Jframe que abre o prontuário do paciente
+>Jframe que abre o prontuário do paciente;
 
 
 #### PACIENTE
 
->botao combinação dos medicos q ao clicar abre um simples perfil do médico
+>botao combinação dos medicos q ao clicar abre um simples perfil do médico;
 
->informações dele
+>informações dele;
 
 
 
 ### O que falta servidor 
 
->enviar medico pro servidor com a atualização do paciente vinculado
+>enviar medico pro servidor com a atualização do paciente vinculado;
 
->enviar pro banco o paciente cadastrado
+>enviar pro banco o paciente cadastrado;
 
->enviar prontuario de um medico pro outro
+>enviar prontuario de um medico pro outro;
 
 
 ##### Se der tempo, marca consulta!
