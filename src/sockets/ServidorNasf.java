@@ -131,6 +131,19 @@ public class ServidorNasf implements Runnable {
                             Rede.banco.adicionarMedico(medico2);
                             Rede.banco.serializar();
                             break;
+                         //vincular paciente   
+                        case 107:
+                            int id2 = in.readInt();
+                            boolean verdade = Rede.banco.buscarIDboolean(id2);
+                            Paciente pacienteid2 = Rede.banco.buscarID(id2);
+                            out.writeBoolean(verdade);
+                            if(verdade){
+                                byte[] bytesid2 = Protocolo.converterObjetoParaArrayByte(pacienteid2);
+                                out.writeInt(bytesid2.length);
+                                out.write(bytesid2, 0, bytesid2.length);
+                            }
+                            
+                            
                     }
                 }
             } catch (Exception ex) {

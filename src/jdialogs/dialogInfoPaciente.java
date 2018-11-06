@@ -6,7 +6,14 @@
 package jdialogs;
 
 import geral.Paciente;
+import geral.Protocolo;
 import geral.Rede;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import parteGrafica.telaAbertura;
 
 /**
  *
@@ -17,10 +24,15 @@ public class dialogInfoPaciente extends javax.swing.JDialog {
     /**
      * Creates new form dialogInfoPaciente
      */
+    DataInputStream in;
+    DataOutputStream out;
     Paciente paciente;
-    public dialogInfoPaciente(Paciente paciente) {
+    
+    public dialogInfoPaciente(Paciente paciente, DataInputStream in, DataOutputStream out) {
         initComponents();
         this.paciente = paciente;
+        this.in = in;
+        this.out = out;
     }
 
     /**
@@ -153,6 +165,15 @@ public class dialogInfoPaciente extends javax.swing.JDialog {
         paciente.setNome(txtNome.getText());
         paciente.setSexo(txtSexo.getText());
         paciente.setId(Integer.parseInt(txtID.getText()));
+                byte[] bytes = Protocolo.converterObjetoParaArrayByte(paciente);
+        try {
+//            out.writeBoolean(true);
+            out.writeInt(105);
+            out.writeInt(bytes.length);
+            out.write(bytes, 0, bytes.length);
+        } catch (IOException ex) {
+            Logger.getLogger(telaAbertura.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        Rede.banco.serializar();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

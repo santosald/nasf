@@ -28,8 +28,8 @@ public class ServidorNasfMain  {
 
 //            DataOutputStream out = new DataOutputStream(ns.getOutputStream());
 //            exec.execute(new ServidorNasf(ns));
-           new Thread(new ServidorNasf(ns)).start();
-//            e.execute(new ServidorNasf(ns));
+//           new Thread(new ServidorNasf(ns)).start();
+            e.execute(new ServidorNasf(ns));
         }
     }
      

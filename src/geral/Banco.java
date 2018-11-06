@@ -63,6 +63,15 @@ public class Banco implements Serializable {
         }
         return null;
     }
+    public boolean buscarIDboolean(int id){
+        for (Paciente paciente : pacientes) {
+            if(paciente != null){
+                        if(paciente.id == id)
+                return true;
+            }
+        }
+        return false;
+    }
     public void serializar() {
       File arq = new File(nomeBanco);
 

@@ -4,6 +4,7 @@ package parteGrafica;
 import geral.Medico;
 import geral.Paciente;
 import geral.Prontuario;
+import geral.Protocolo;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import jdialogs.buscarPaciente;
 import jdialogs.criarProntuario;
 
@@ -59,6 +61,7 @@ public void atualizarTela(){
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlPaciente = new javax.swing.JPanel();
+        txtID = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -80,7 +83,7 @@ public void atualizarTela(){
             }
         });
 
-        jButton2.setText("Adicionar paciente");
+        jButton2.setText("Vincular paciente");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -90,29 +93,39 @@ public void atualizarTela(){
         pnlPaciente.setLayout(new javax.swing.BoxLayout(pnlPaciente, javax.swing.BoxLayout.Y_AXIS));
         jScrollPane1.setViewportView(pnlPaciente);
 
+        txtID.setText("Insira o ID do paciente aqui");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(34, 34, 34)
-                .addComponent(jButton1)
-                .addGap(36, 36, 36))
             .addGroup(layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(423, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(148, 148, 148))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addGap(49, 49, 49))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(49, 49, 49)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(125, 125, 125)
+                        .addComponent(jButton1)))
                 .addContainerGap(95, Short.MAX_VALUE))
         );
 
@@ -125,8 +138,21 @@ public void atualizarTela(){
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    buscarPaciente busca = new buscarPaciente(in,out,medico);
-    busca.setVisible(true);
+        try {
+            out.writeInt(107);
+            out.writeInt(Integer.parseInt(txtID.getText().trim()));
+            if(in.readBoolean()){
+            int tam = in.readInt();
+            byte[] bytes = new byte[tam];
+            in.read(bytes);
+            Paciente paciente = (Paciente) Protocolo.converterByteArrayParaObjeto(bytes);
+            medico.adicionarPaciente(paciente);
+                System.out.println("Foi vinculado ao  médico " + medico.getNome() + " o paciente " + paciente.getUsuario());
+            }else{
+            JOptionPane.showMessageDialog(this,"Não foi encontrado o paciente");
+            }
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -135,5 +161,6 @@ public void atualizarTela(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlPaciente;
+    private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
 }
