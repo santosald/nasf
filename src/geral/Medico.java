@@ -18,10 +18,19 @@ public class Medico implements Serializable {
     int senha;
     List<Prontuario> prontuarios = new ArrayList<Prontuario>();
     List<Paciente> pacientes = new ArrayList<Paciente>();
+    List<Eventos> eventos = new ArrayList<Eventos>();
     
     public Medico(String nome, int senha){
         this.nome = nome;
         this.senha = senha;
+    }
+
+    public List<Eventos> getEventos() {
+        return eventos;
+    }
+
+    public void setEventos(List<Eventos> eventos) {
+        this.eventos = eventos;
     }
     
     public void adicionarPaciente(Paciente paciente){
